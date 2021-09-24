@@ -156,3 +156,40 @@
 # > GlusterFS is a scale-out network-attached storage file system. It has found applications including cloud computing, streaming media services, and content delivery networks. GlusterFS was developed originally by Gluster, Inc. and then by Red Hat, Inc., as a result of Red Hat acquiring Gluster in 2011. Source: https://en.wikipedia.org/wiki/Gluster
 #
 # <img src="https://docs.gluster.org/en/latest/images/New-DistributedVol.png">
+
+# ### Key traits
+# * Scalable,
+# * Capable of scaling to several brontobytes (10^27) and thousands of clients
+# * Designed for commodity servers and storage to form massive storage networks 
+
+# ### Other features
+# * Highly available storage
+# * Built in replication and geo-replication
+# * Self-healing
+# * The ability to re-balance data 
+
+# ### Definitions
+# * Bricks - storage units which consist of a server and directory path (i.e., server:/export)
+# * Trusted Storage Pool – a trusted network of servers that will host storage resources
+# * Volumes - collection of bricks with a common redundancy requirement 
+
+# ### Gluster Volume Types
+# Gluster supports a number of volumes types, each providing different availability and performance characteristics:
+# * Distributed – Files are distributed across bricks in the cluster
+# * Replicated – Files are replicated across one or more bricks in the cluster
+# * Striped – Stripes data across one or more bricks
+# * Distributed replicated – Distributes files across replicated bricks in a cluster
+# * Distributed striped – Stripes data across two or more nodes in the cluster
+
+# ### Performance Considerations
+# From Gluster documentation:
+# * Use distributed volumes where the requirement is to scale storage and the redundancy is either not important or is  provided by other hardware/software layers
+# * Use replicated volumes in environments where highavailability and high-reliability are critical
+# * Use striped volumes only in high concurrency environments accessing very large files
+# * Use distributed striped volumes where the requirement is to scale storage and in high concurrency environments accessing very large files
+# * Use distributed replicated volumes in environments where the requirement is to scale storage and high-reliability is critical. Distributed replicated volumes offer improved read performance in most environments
+
+# ## Conclusion
+# Gluster is one of many distributed file systems that are used to organize and access large datasets and files. We'll discuss additional distributed file systems such as the Hadoop Distributed File System in subsequent chapters. Gluster was chosen because of its community support and industry adoption. Its goal is to provide a file system for applications needing scale-out storage and high-reliability. In other words, it is designed for applications that do not fit the traditional client-server model of file systems such as NFS.
+
+
