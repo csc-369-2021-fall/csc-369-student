@@ -165,6 +165,8 @@ book_files[:10]
 
 ```python slideshow={"slide_type": "subslide"}
 book_word_freq = Chapter2_helper.count_words(book_files)
+import pandas as pd
+pd.Series(book_word_freq)
 ```
 
 <!-- #region slideshow={"slide_type": "fragment"} -->
@@ -204,20 +206,26 @@ My point is that depending on the application you may want to take something you
 <!-- #endregion -->
 
 ```python slideshow={"slide_type": "subslide"}
-!cat Chapter2_count_words_book.py
+!ls Chapter2_count_words_book.py
 ```
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ### Running parallel
 
-Let's break down this command:
+Let's break down the following command. 
+* Identify the pipes. What are they doing?
+* What is the structure of the find command?
+* What happened to the ::: in the parallel command
+* What does the -v mean in the egrep command?
 <!-- #endregion -->
 
 ```python slideshow={"slide_type": "subslide"}
-!find ../data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo %
+!find ../data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo {}
 ```
 
-Let's now time it:
+Often I do this kind of pattern where echo is the last command. This helps me debug before I even get started. To me programming is about debugging more than anything. The better I am at debugging, the better programmer. 
+
+Next we will use our script Chapter2_count_words_book.py and *parallel* to perform a distributed computation of counting words in parallel.
 
 ```python slideshow={"slide_type": "subslide"}
 %%timeit -n 1
@@ -292,7 +300,9 @@ alt.Chart(plot_df.set_index('word').loc[top_words].reset_index()).mark_bar().enc
 ```
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
-**Anyways...** I feel like we've gotten that out of our system. Now back to distributed computing.
+**Anyways...** I feel like we've gotten that out of our system. In reality, we need to perform a lot more data cleaning and data organization before such an analysis will yield what we want.
+
+Now back to distributed computing.
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "slide"} -->
@@ -321,3 +331,11 @@ Parallel is one of the most useful distributed computing tools at your disposal.
 
 While there are many tutorials and introduction to Bash, I like this one: https://ubuntu.com/tutorials/command-line-for-beginners. You may do almost the entire tutorial directly in this notebook. There are several ways to run Bash within Jupyter. Here are some examples.
 <!-- #endregion -->
+
+```python
+# Don't forget to push!
+```
+
+```python
+
+```
