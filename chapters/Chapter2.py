@@ -108,13 +108,13 @@ home = str(Path.home()) # all other paths are relative to this path.
 # Let's see a few Bash commands to take a look at the books.
 
 # + slideshow={"slide_type": "fragment"}
-# !ls ../data/gutenberg
+# !ls {home}/csc-369-student/data/gutenberg
 
 # + slideshow={"slide_type": "subslide"}
-# !ls -l ../data/gutenberg | wc -l
+# !ls -l {home}/csc-369-student/data/gutenberg | wc -l
 
 # + slideshow={"slide_type": "subslide"}
-# !head ../data/gutenberg/order.txt
+# !head {home}/csc-369-student/data/gutenberg/order.txt
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # **Python code to create a list of files in the ranked order**
@@ -122,8 +122,8 @@ home = str(Path.home()) # all other paths are relative to this path.
 # + slideshow={"slide_type": "fragment"}
 from os import path
 book_files = []
-for book in open("../data/gutenberg/order.txt").read().split("\n"):
-    if path.isfile(f'../data/gutenberg/{book}-0.txt'):
+for book in open(f"{home}/csc-369-student/data/gutenberg/order.txt").read().split("\n"):
+    if path.isfile(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt'):
         book_files.append(f'../data/gutenberg/{book}-0.txt')
 book_files[:10]
 
@@ -192,7 +192,7 @@ book_word_freq = Chapter2_helper.count_words(book_files)
 # * What does the -v mean in the egrep command?
 
 # + slideshow={"slide_type": "subslide"}
-# !find ../data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo {}
+# !find {home}/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo {}
 # -
 
 # Often I do this kind of pattern where echo is the last command. This helps me debug before I even get started. To me programming is about debugging more than anything. The better I am at debugging, the better programmer. 
@@ -201,7 +201,7 @@ book_word_freq = Chapter2_helper.count_words(book_files)
 
 # + slideshow={"slide_type": "subslide"}
 # %%timeit -n 1
-# !find ../data/gutenberg -name "*.txt" | egrep -v order.txt | parallel python Chapter2_count_words_book.py
+# !find {home}/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel python Chapter2_count_words_book.py
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### Results
