@@ -31,7 +31,7 @@ def get_lines(index,word):
         pass
     return lines
 
-def merge():
+def merge(data_dir=f"{home}/csc-369-student/data"):
     index = {}
     # r = os.system('parallel command from above')
     if r == 0:
