@@ -45,6 +45,6 @@ def test_exercise_4():
     assert set(lines) == set(fix_lines(answers['exercise_4']))
 
 def test_exercise_5():
-    index = Lab2_helper.merge()
+    index = Lab2_helper.merge(data_dir=f"{DIR}/../data")
     lines = fix_lines(Lab2_helper.get_lines(index,'things'))
     assert set(lines) == set(fix_lines(answers['exercise_5']))
