@@ -164,7 +164,7 @@ index = Lab2_helper.merge()
 # You've done it!
 ```
 
-```python slideshow={"slide_type": "subslide"} jupyter={"outputs_hidden": true}
+```python slideshow={"slide_type": "subslide"}
 pd.Series(index['things'])
 ```
 

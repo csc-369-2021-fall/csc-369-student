@@ -132,7 +132,7 @@ pd.Series(group1_results['things'])
 index = Lab2_helper.merge()
 # You've done it!
 
-# + slideshow={"slide_type": "subslide"} jupyter={"outputs_hidden": true}
+# + slideshow={"slide_type": "subslide"}
 pd.Series(index['things'])
 # -
 
