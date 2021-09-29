@@ -73,7 +73,7 @@ Most real world examples that need distributed computing need distributed comput
 
 <!-- #region slideshow={"slide_type": "slide"} -->
 ## Parallel Processing Logs
-Consider the cybersecurity task of examining web server logs. Specifically, read/skim this article in groups of three:
+Consider the cybersecurity task of examining web server logs. Specifically, read/skim this article:
 <a href="https://resources.infosecinstitute.com/topic/log-analysis-web-attacks-beginners-guide/">Log Analysis</a>.
 
 Once you have read the article, consider the problem of running Scalp on a single log. Probably not an issue. Consider running it on a very large log (web server logs can get very very big). 
@@ -93,8 +93,9 @@ Would this problem need distributed computing. Discuss in your groups and bring 
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
-### Stop and consider
-We will be jumping straight into command line usage examples. Dependening on your comfort level you may want to flip down to the **"Detour: Linux and Bash"** section. 
+## Detour: Linux and Bash
+
+While there are many tutorials and introduction to Bash, I like this one: https://ubuntu.com/tutorials/command-line-for-beginners. You may do almost the entire tutorial directly in this notebook. There are several ways to run Bash within Jupyter. Here are some examples.
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "slide"} -->
@@ -139,7 +140,7 @@ from os import path
 book_files = []
 for book in open(f"{home}/csc-369-student/data/gutenberg/order.txt").read().split("\n"):
     if path.isfile(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt'):
-        book_files.append(f'../data/gutenberg/{book}-0.txt')
+        book_files.append(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt')
 book_files[:10]
 ```
 
@@ -326,16 +327,6 @@ Parallel is one of the most useful distributed computing tools at your disposal.
 
 <!-- #endregion -->
 
-<!-- #region slideshow={"slide_type": "slide"} -->
-## Detour: Linux and Bash
-
-While there are many tutorials and introduction to Bash, I like this one: https://ubuntu.com/tutorials/command-line-for-beginners. You may do almost the entire tutorial directly in this notebook. There are several ways to run Bash within Jupyter. Here are some examples.
-<!-- #endregion -->
-
 ```python
 # Don't forget to push!
-```
-
-```python
-
 ```
