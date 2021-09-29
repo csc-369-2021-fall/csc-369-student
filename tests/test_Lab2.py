@@ -5,13 +5,17 @@ sys.path.append(".")
 # Import the student solutions
 import Lab2_helper
 
-book_files = Lab2_helper.book_files
-
 import pathlib
 DIR=pathlib.Path(__file__).parent.absolute()
 
 import joblib
 answers = joblib.load(str(DIR)+"/answers_Lab2.joblib")
+
+from os import path
+book_files = []
+for book in open(f"{home}/csc-369-student/data/gutenberg/order.txt").read().split("\n"):
+    if path.isfile(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt'):
+        book_files.append(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt')
 
 def fix_lines(lines):
     new_lines = []
