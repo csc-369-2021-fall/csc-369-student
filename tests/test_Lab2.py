@@ -11,6 +11,10 @@ DIR=pathlib.Path(__file__).parent.absolute()
 import joblib
 answers = joblib.load(str(DIR)+"/answers_Lab2.joblib")
 
+import os
+from pathlib import Path
+home = str(Path.home())
+
 from os import path
 book_files = []
 for book in open(f"{home}/csc-369-student/data/gutenberg/order.txt").read().split("\n"):
