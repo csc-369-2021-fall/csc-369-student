@@ -17,9 +17,9 @@ home = str(Path.home())
 
 from os import path
 book_files = []
-for book in open(f"{home}/csc-369-student/data/gutenberg/order.txt").read().split("\n"):
-    if path.isfile(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt'):
-        book_files.append(f'{home}/csc-369-student/data/gutenberg/{book}-0.txt')
+for book in open(f"{DIR}/../data/gutenberg/order.txt").read().split("\n"):
+    if path.isfile(f'{DIR}/../data/gutenberg/{book}-0.txt'):
+        book_files.append(f'{DIR}/../data/gutenberg/{book}-0.txt')
 
 def fix_lines(lines):
     new_lines = []
