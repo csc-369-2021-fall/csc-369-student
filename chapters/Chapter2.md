@@ -32,7 +32,7 @@ What's is the best pizza place in SLO?
 While this text can be viewed as PDF, it is most useful to have a Jupyter environment. I have an environment ready for each of you, but you can get your own local environment going in several ways. One popular way is with Anaconda (<a href="https://www.anaconda.com/">https://www.anaconda.com/</a>. Because of the limited time, you can use my server.
 <!-- #endregion -->
 
-```python
+```python slideshow={"slide_type": "skip"}
 %load_ext autoreload
 %autoreload 2
 
@@ -46,6 +46,7 @@ home = str(Path.home()) # all other paths are relative to this path.
 # change home to where you are storing everything. Again. Not recommended.
 ```
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Command Line
 
 In Chapter 1, I included several videos where you had to follow along as I entered commands on the command line. In this chapter we are going to increase our mastery of the command line and distributed computing at the same time. 
@@ -57,6 +58,7 @@ The command line augments and amplifies technology we are already using. We'll u
 The command line is scalable which is very important for distributed computing. It allows us to automate many tasks and scale them in a distributed manner.
 
 The command line is ubiquitous. 95% of the worlds supercomputers use Unix/Linux and are accessible by the command line. 
+<!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ### How are distributed systems different?
@@ -66,12 +68,12 @@ While we can abstract away some of elements of distributed computing, we are goi
 3. How do we assemble the full answer?
 <!-- #endregion -->
 
-<!-- #region slideshow={"slide_type": "slide"} -->
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Practical Considerations
 Most real world examples that need distributed computing need distributed computing because they would otherwise (and may still) require a long time to run. This isn't practical for learning. More importantly to remember, even in the real world we test on small subsets of data before scaling up. All of the examples throughout are scaled down representations of a real problem that may require distributed computing depending on time and resources.
 <!-- #endregion -->
 
-<!-- #region slideshow={"slide_type": "slide"} -->
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Parallel Processing Logs
 Consider the cybersecurity task of examining web server logs. Specifically, read/skim this article:
 <a href="https://resources.infosecinstitute.com/topic/log-analysis-web-attacks-beginners-guide/">Log Analysis</a>.
@@ -92,7 +94,7 @@ Would this problem need distributed computing. Discuss in your groups and bring 
 * Can you estimate how long a non-distributed approach will take?
 <!-- #endregion -->
 
-<!-- #region slideshow={"slide_type": "subslide"} -->
+<!-- #region slideshow={"slide_type": "slide"} -->
 ## Detour: Linux and Bash
 
 While there are many tutorials and introduction to Bash, I like this one: https://ubuntu.com/tutorials/command-line-for-beginners. You may do almost the entire tutorial directly in this notebook. There are several ways to run Bash within Jupyter. Here are some examples.
@@ -224,9 +226,11 @@ Let's break down the following command.
 !find {home}/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo {}
 ```
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 Often I do this kind of pattern where echo is the last command. This helps me debug before I even get started. To me programming is about debugging more than anything. The better I am at debugging, the better programmer. 
 
 Next we will use our script Chapter2_count_words_book.py and *parallel* to perform a distributed computation of counting words in parallel.
+<!-- #endregion -->
 
 ```python slideshow={"slide_type": "subslide"}
 %%timeit -n 1
@@ -327,6 +331,6 @@ Parallel is one of the most useful distributed computing tools at your disposal.
 
 <!-- #endregion -->
 
-```python
+```python slideshow={"slide_type": "skip"}
 # Don't forget to push!
 ```
