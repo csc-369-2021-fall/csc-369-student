@@ -91,7 +91,7 @@ home = str(Path.home()) # all other paths are relative to this path.
 # While there are many tutorials and introduction to Bash, I like this one: https://ubuntu.com/tutorials/command-line-for-beginners. You may do almost the entire tutorial directly in this notebook. There are several ways to run Bash within Jupyter. Here are some examples.
 
 # + [markdown] slideshow={"slide_type": "slide"}
-# ## Example: Project Gutenberg
+# ## Example Data: Project Gutenberg
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # Consider another example. What if you were interested in looking for patterns in the top 100 books last year? Your first idea is to compare the word frequencies in the top 25 books to the next 25 books. 
@@ -108,7 +108,7 @@ home = str(Path.home()) # all other paths are relative to this path.
 #
 # Let's see a few Bash commands to take a look at the books.
 
-# + slideshow={"slide_type": "fragment"}
+# + slideshow={"slide_type": "subslide"}
 # !ls {home}/csc-369-student/data/gutenberg
 
 # + slideshow={"slide_type": "subslide"}
@@ -155,9 +155,59 @@ pd.Series(book_word_freq)
 # %%timeit -n 1
 book_word_freq = Chapter2_helper.count_words(book_files)
 
+# + [markdown] slideshow={"slide_type": "slide"}
+# ## Motivating Example: Inverted Index
+#
+# Information retrieval (IR) is a field concerned with the structure, analysis, organization, storage, searching, and retrieval of information.
+#
+# IR is the science of searching for documents, information within documents, and metadata about documents. Documents as used here describe an abstract piece of information that includes databases and the World Wide Web (WWW).
+
 # + [markdown] slideshow={"slide_type": "subslide"}
+# **Stop and think:** Take a moment and a piece of paper. Sketch out how you think the backend and the frontend process/architecture of search engine is constructed. Very high level of course. 
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# Image commented out by default.
+#
+# <!--<img src="https://www.researchgate.net/profile/Yoshiki-Mikami/publication/224197661/figure/fig1/AS:341147890274356@1458347403868/Architecture-of-Search-Engine.png" width=400>-->
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# We will not dig into all of the aspects shown in that image. 
+#
+# We will focus on one important algorithm: the creation of the inverted index. 
+#
+# We will implement this algorithm and apply it to produce an inverted index of our Project Gutenberg Dataset.
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# <img src="https://hdscorp--c.na74.content.force.com/servlet/servlet.ImageServer?id=0151J000004MM9EQAW&oid=00Do0000000IJig">
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# **Stop and think:** How could it help someone trying to retrieve information from Project Gutenberg?
+
+# + [markdown] slideshow={"slide_type": "fragment"}
+# It provides a quick and efficient data structure to find the location of words/terms in our dataset. We could imagine a situation where an author or scholar would want to look up all occurences of a word, and it is reasonable to assume that they would benefit from viewing the nearby text containing the word/term.
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# ### Implementation thoughts
+#
+# We will write algorithms throughout this course using different technology. 
+#
+# Our first approach to creating an inverted index using distributed computing will rely on minimal technology. Specifically, we will rely on our knowledge of Python and the command line.
+#
+# Later in the class, we will repeat this example using Hadoop and Spark.
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# Before you stop drop and code, please consider the following questions:
+#
+# 1. What part of computing the inverted index could be distributed? Think in terms of subtasks that can run in parallel.
+#
+# 2. Once you have the results of these subtasks (i.e., the parallel processing finishes), how do you combine the results into a single inverted index?
+
+# + [markdown] slideshow={"slide_type": "slide"}
 # ## GNU Parallel
-# One of my favorite command line finds of all time: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a>. This flexible program provides an easy to use way of running the same command in *parrallel*. The arguments may differ between commands. Here are some examples. This is a silly example, but it illustrates the point of *parallel*. Let's say you want to list the contents of three directors: dir1, dir2, and dir3. You can do this with:
+# One of my favorite command line finds of all time: <a href="https://www.gnu.org/software/parallel/">https://www.gnu.org/software/parallel/</a>. This flexible program provides an easy to use way of running a command in *parrallel*. We will illustrate with a silly example, but it illustrates the point of *parallel*. 
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# Let's say you want to list the contents of three directors: dir1, dir2, and dir3. You can do this with:
 #
 # ```bash
 # $ ls dir1
@@ -166,43 +216,60 @@ book_word_freq = Chapter2_helper.count_words(book_files)
 #
 # $ ls dir3
 # ```
-#
+
+# + [markdown] slideshow={"slide_type": "subslide"}
 # Using parallel you can do:
 #
 # ```bash
 # parallel ls {} ::: dir1 dir2 dir3
 # ```
 #
-# This command can be brocken down into the list after ::: that is split and inserted into {}. This is how we execute the three listings.
+# This command can be brocken down into the list after ::: that is split and inserted into {}. Each of these commands are excuted in parallel now. 
+#
+# **Stop and think:** Do you know which directory will be listed first?
 
 # + [markdown] slideshow={"slide_type": "subslide"}
-# Our small example on <100 books did not take very long. This wouldn't classify as something that needs distributed computing. But consider how likely it is that instead of counting words, we are doing something more computationally intensive. OR consider that we may be doing something simple like counting words, but instead of a few books, it is the internet itself...
+# Consider creating an inverted index for our small example of <100 books. 
 #
-# My point is that depending on the application you may want to take something you've written and run it in parallel. While there are language extensions for this, we are focusing on command line distributed computing execution as that is often a good fit for the task.
+# Technically, our small example wouldn't classify as something that needs distributed computing, but consider computing the architecture of a search engine we described previously. Creating an inverted index for the WWW is an application that needs distributed computing. 
+#
+# In both scenarios, the algorithms and processes are conceptually similar.
 
-# + slideshow={"slide_type": "subslide"}
-# !ls Chapter2_count_words_book.py
+# + [markdown] slideshow={"slide_type": "subslide"}
+# We will be leaving the implementation of an inverted index for Project Gutenberg to a lab exercise.
+#
+# For this lecture, we will discuss and demonstrate *parallel* by constructing a distributed computing version of our word/term frequency algorithm.
+
+# + [markdown] slideshow={"slide_type": "subslide"}
+# The **strength** of the GNU parallel project is it seamlessly takes something written (e.g., program, script) and executes it in parallel.
+#
+# The burden of constructing a merged/final output is not covered by parallel and must be done by you. More sophisticated technologies such as Spark provide built-in support for this task.
+#
+# Still, we all have many useful programs not optimized for distributed computing that nevertheless could benefit from distributed computing.
+
+# + [markdown] slideshow={"slide_type": "slide"}
+# ## Case study: Term Frequency
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### Running parallel
 #
-# Let's break down the following command. 
+# We will break down a more sophisticated *parallel* command and answer the following:
 # * Identify the pipes. What are they doing?
 # * What is the structure of the find command?
 # * What happened to the ::: in the parallel command
 # * What does the -v mean in the egrep command?
 
 # + slideshow={"slide_type": "subslide"}
-# !find {home}/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo {}
+# !find ~/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel echo {}
 
 # + [markdown] slideshow={"slide_type": "subslide"}
-# Often I do this kind of pattern where echo is the last command. This helps me debug before I even get started. To me programming is about debugging more than anything. The better I am at debugging, the better programmer. 
+# Often I use this pattern where echo is the last command. This helps me debug before I even get started. To me programming is about debugging more than anything. The better I am at debugging, the better programmer. 
 #
-# Next we will use our script Chapter2_count_words_book.py and *parallel* to perform a distributed computation of counting words in parallel.
+# Next we will use a script ``Chapter2_count_words_book.py`` and *parallel* to perform a distributed computation of counting words in parallel.
 
 # + slideshow={"slide_type": "subslide"}
 # %%timeit -n 1
-# !find {home}/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel python Chapter2_count_words_book.py
+# !find ~/csc-369-student/data/gutenberg -name "*.txt" | egrep -v order.txt | parallel python Chapter2_count_words_book.py
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### Results
@@ -282,7 +349,7 @@ alt.Chart(plot_df.set_index('word').loc[top_words].reset_index()).mark_bar().enc
 # 1. Describe an instance where you would reach for GNU parallel instead of more advanced and integrated solutions.
 #
 #
-# 2. When solving a distributed computing problem, what doesn't GNU parallel do for you? What did you have to implement in the lab?
+# 2. When solving a distributed computing problem, what doesn't GNU parallel do for you? What are going to have to implement in the lab?
 #
 #
 #
