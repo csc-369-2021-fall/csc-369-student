@@ -56,9 +56,11 @@ There are languages such as Julia that are gaining popularity. These languages p
 These provide **higher level abstractions** for neural networks, datasets, and streams. One of the biggest hurtles for their adoption is that these often require rewriting a lot of our code and our thinking about how to compose solutions. This leads to an obvious question:
 <!-- #endregion -->
 
+<!-- #region slideshow={"slide_type": "fragment"} -->
 What about something in between? **Can't we just improve our favorite languages?**
 
 We will consider two popular distributed computing platforms for Python: Ray and Dask.
+<!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "slide"} -->
 ## Python Library 1: Ray
@@ -176,30 +178,30 @@ import numpy as np
 all_results = set(itertools.chain(*ray.get(result_ids)))
 ```
 
-```python
+```python slideshow={"slide_type": "fragment"}
 max(all_results)
 ```
 
-```python slideshow={"slide_type": "subslide"}
+```python slideshow={"slide_type": "fragment"}
 len(all_results)
 ```
 
-```python
+```python slideshow={"slide_type": "subslide"}
 result_ids = [find.remote(3),find.remote(19428)]
 result_ids
 ```
 
-```python
+```python slideshow={"slide_type": "subslide"}
 import itertools
 import numpy as np
 all_results = set(itertools.chain(*ray.get(result_ids)))
 ```
 
-```python
+```python slideshow={"slide_type": "fragment"}
 max(all_results)
 ```
 
-```python
+```python slideshow={"slide_type": "fragment"}
 len(all_results)
 ```
 

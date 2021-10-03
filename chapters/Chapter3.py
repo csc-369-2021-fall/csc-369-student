@@ -48,8 +48,8 @@
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # These provide **higher level abstractions** for neural networks, datasets, and streams. One of the biggest hurtles for their adoption is that these often require rewriting a lot of our code and our thinking about how to compose solutions. This leads to an obvious question:
-# -
 
+# + [markdown] slideshow={"slide_type": "fragment"}
 # What about something in between? **Can't we just improve our favorite languages?**
 #
 # We will consider two popular distributed computing platforms for Python: Ray and Dask.
@@ -154,23 +154,26 @@ result_ids
 import itertools
 import numpy as np
 all_results = set(itertools.chain(*ray.get(result_ids)))
-# -
 
+# + slideshow={"slide_type": "fragment"}
 max(all_results)
 
-# + slideshow={"slide_type": "subslide"}
+# + slideshow={"slide_type": "fragment"}
 len(all_results)
-# -
 
+# + slideshow={"slide_type": "subslide"}
 result_ids = [find.remote(3),find.remote(19428)]
 result_ids
 
+# + slideshow={"slide_type": "subslide"}
 import itertools
 import numpy as np
 all_results = set(itertools.chain(*ray.get(result_ids)))
 
+# + slideshow={"slide_type": "fragment"}
 max(all_results)
 
+# + slideshow={"slide_type": "fragment"}
 len(all_results)
 
 
