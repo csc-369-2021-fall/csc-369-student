@@ -91,6 +91,10 @@ display(pd.Series(index.keys()))
 ```
 
 ```python
+index['things']
+```
+
+```python
 pd.Series(index['things'])
 ```
 

@@ -79,6 +79,8 @@ index = Lab2_helper.merged_inverted_index(book_files)
 display(pd.Series(index.keys()))
 # -
 
+index['things']
+
 pd.Series(index['things'])
 
 # + slideshow={"slide_type": "subslide"}
