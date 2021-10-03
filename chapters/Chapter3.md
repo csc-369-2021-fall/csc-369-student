@@ -15,7 +15,7 @@ jupyter:
 ---
 
 <!-- #region slideshow={"slide_type": "slide"} hideCode=false hidePrompt=false -->
-# Chapter 2 - Why isn’t distributed computing built into my favorite language? 
+# Chapter 3 - Why isn’t distributed computing built into my favorite language? 
 
 ## Language extensions for distributed computing
 
@@ -523,4 +523,10 @@ There is much more to Ray and Dask than we presented in this chapter. They are b
 
 ### 5. Does Dask use futures? How do you compare them to Ray futures? How do you tell Dask to execute and produce a result?
 
+
+**Thank you!**
 <!-- #endregion -->
+
+```python
+
+```

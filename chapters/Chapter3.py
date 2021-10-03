@@ -15,7 +15,7 @@
 # ---
 
 # + [markdown] slideshow={"slide_type": "slide"} hideCode=false hidePrompt=false
-# # Chapter 2 - Why isn’t distributed computing built into my favorite language? 
+# # Chapter 3 - Why isn’t distributed computing built into my favorite language? 
 #
 # ## Language extensions for distributed computing
 #
@@ -438,3 +438,8 @@ g
 #
 # ### 5. Does Dask use futures? How do you compare them to Ray futures? How do you tell Dask to execute and produce a result?
 #
+#
+# **Thank you!**
+# -
+
+
