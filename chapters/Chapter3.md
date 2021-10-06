@@ -32,6 +32,17 @@ If you were stranded on a desert island, what two items do you bring with you?
 While this text can be viewed as PDF, it is most useful to have a Jupyter environment. I have an environment ready for each of you, but you can get your own local environment going in several ways. One popular way is with Anaconda (<a href="https://www.anaconda.com/">https://www.anaconda.com/</a>. Because of the limited time, you can use my server.
 <!-- #endregion -->
 
+```python
+%load_ext autoreload
+%autoreload 2
+    
+import os
+from pathlib import Path
+home = str(Path.home())
+
+import pandas as pd
+```
+
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## Motivation: What about programming Languages?
 For the sake of the discussion, let's focus on imperative programming languages such as Python and Java. These programming languages provide a way to algorithmicly specify your program. We're comfortable and familiar with this paradigm. There are other approaches of course. Functional and logic programming for example. Most of our languages are designed for software engineers in mind. I'm oversimplying the world here, but our main programming languages are used to build software. 
@@ -303,7 +314,7 @@ https://corgis-edu.github.io/corgis/python/covid/
 
 ```python slideshow={"slide_type": "subslide"}
 import sys
-sys.path.insert(0,'../data/covid')
+sys.path.insert(0,f'{home}/csc-369-student/data/covid')
 import covid
 ```
 
@@ -311,7 +322,7 @@ import covid
 **Let's see how it looks**
 <!-- #endregion -->
 
-```python slideshow={"slide_type": "subslide"} jupyter={"outputs_hidden": true}
+```python slideshow={"slide_type": "subslide"}
 report = covid.get_report()
 report
 ```
