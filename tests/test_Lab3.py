@@ -13,9 +13,9 @@ answers = joblib.load(str(DIR)+"/answers_Lab3.joblib")
 
 import ray
 
-group1 = get_book_files(f"{DIR}/../data/gutenberg/group1")
-group2 = get_book_files(f"{DIR}/../data/gutenberg/group2")
-group3 = get_book_files(f"{DIR}/../data/gutenberg/group3")
+group1 = Lab3_helper.get_book_files(f"{DIR}/../data/gutenberg/group1")
+group2 = Lab3_helper.get_book_files(f"{DIR}/../data/gutenberg/group2")
+group3 = Lab3_helper.get_book_files(f"{DIR}/../data/gutenberg/group3")
 
 def index2set(index):
     lines = []
