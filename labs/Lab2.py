@@ -77,9 +77,10 @@ display(index['things'])
 # + slideshow={"slide_type": "subslide"}
 index = Lab2_helper.merged_inverted_index(book_files)
 display(pd.Series(index.keys()))
-# -
 
+# + jupyter={"outputs_hidden": true}
 index['things']
+# -
 
 pd.Series(index['things'])
 
