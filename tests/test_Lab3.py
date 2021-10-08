@@ -32,7 +32,7 @@ def counts2set(counts):
 
 def test_exercise_1():
     ray.init(ignore_reinit_error=True)
-    student = index2set(fix_index(Lab3_helper.merge([group1,group2,group3]),answers['exercise_1_keys']))
+    student = index2set(Lab3_helper.fix_index(Lab3_helper.merge([group1,group2,group3]),answers['exercise_1_keys']))
     ray.shutdown()
     assert student == index2set(answers['exercise_1'])
 
