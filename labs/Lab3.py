@@ -89,6 +89,8 @@ counts
 
 merged_counts = Lab3_helper.merge_count_words([group1,group2,group3])
 
+merged_counts
+
 merged_counts['things']
 
 # + slideshow={"slide_type": "skip"} tags=[]

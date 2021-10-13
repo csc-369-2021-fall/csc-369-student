@@ -63,7 +63,7 @@ display(line)
 display(Lab2_helper.read_line_at_pos(book_files[0],95))
 
 # + [markdown] slideshow={"slide_type": "subslide"}
-# **Exercise 2:** Create a function that returns a Python dictionary representing the inverted index. The dictionary should contain an offset that puts the file point at the beginning of the line. 
+# **Exercise 2:** Create a function that returns a Python dictionary representing the inverted index. The dictionary should contain an offset that puts the file point at the beginning of the line. I used ``.split()`` without any arguments.
 #
 # Hint: I used the ``tell`` function to return the correct offset.
 

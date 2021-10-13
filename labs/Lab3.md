@@ -103,6 +103,10 @@ merged_counts = Lab3_helper.merge_count_words([group1,group2,group3])
 ```
 
 ```python
+merged_counts
+```
+
+```python
 merged_counts['things']
 ```
 
