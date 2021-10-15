@@ -285,5 +285,3 @@ output
 
 # ## References:
 # * Source: https://www.datadoghq.com/blog/hadoop-architecture-overview/
-
-
