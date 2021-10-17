@@ -29,7 +29,7 @@ def run_exercise_2():
 
 def run_exercise_3():
     all_books_rdd = Lab4_helper.load_rdd_all_books(sc,f"file:{DIR}/../data/gutenberg")
-    word_frequencies = Lab4_helper.word_freq(rdd)
+    word_frequencies = Lab4_helper.word_freq(all_books_rdd)
     return set(word_frequencies)
 
 def run_exercise_4():
