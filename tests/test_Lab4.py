@@ -36,6 +36,11 @@ def run_exercise_4():
     res = Lab4_helper.book_word_counts(sc,f"file:{DIR}/../data/gutenberg")
     return set(res)
 
+def run_exercise_5():
+    output = Lab4_helper.word_freq(all_books_rdd)
+    output_lower = Lab4_helper.lower_case_word_freq(sc.parallelize(output))
+    return set(output_lower)
+
 def counts2tuple(counts):
     lines = []
     for key in sorted(list(counts.keys())):
@@ -53,3 +58,6 @@ def test_exercise_3():
 
 def test_exercise_4():
     assert set(answers['exercise_3']) == run_exercise_3()
+    
+def test_exercise_5():
+    assert set(answers['exercise_5']) == run_exercise_5()
