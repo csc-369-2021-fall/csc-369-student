@@ -37,6 +37,7 @@ def run_exercise_4():
     return set(res)
 
 def run_exercise_5():
+    all_books_rdd = Lab4_helper.load_rdd_all_books(sc,f"file:{DIR}/../data/gutenberg")
     output = Lab4_helper.word_freq(all_books_rdd)
     output_lower = Lab4_helper.lower_case_word_freq(sc.parallelize(output))
     return set(output_lower)
