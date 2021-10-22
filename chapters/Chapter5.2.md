@@ -132,6 +132,10 @@ A_RDD.join(B_RDD).collect()
 ```
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
+**Your solution here**
+<!-- #endregion -->
+
+<!-- #region slideshow={"slide_type": "fragment"} -->
 Here is the output of the cartesian product:
 <!-- #endregion -->
 
@@ -301,7 +305,7 @@ AB
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "fragment"} -->
-... This is a leading question. If you try this, we'll be heading down an incorrect path. Instead, is there something we can to map the keys to a key that helps us out? My real question to you is:
+... This is a leading question. If you try this, we'll be heading down an incorrect path. Instead, is there something we can map the keys to a key that helps us out? My real question to you is:
 **Pick a line at random, and what should be the key?**
 <pre>
 (1, ([3, 1, 0], [1, 2, 8]))
