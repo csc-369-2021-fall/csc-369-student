@@ -67,10 +67,10 @@ def run_exercise_3(func):
     return func(A_RDD,B_RDD)
 
 def test_exercise_1():
-    assert set(answers['exercise_1']) == set(run_exercise_1(Lab4_helper.exercise_1))
+    assert set(answers['exercise_1']) == set(run_exercise_1(Lab5_helper.exercise_1))
 
 def test_exercise_2():
-    assert set(answers['exercise_2']) == set(run_exercise_2(Lab4_helper.exercise_2))
+    assert set(answers['exercise_2']) == set(run_exercise_2(Lab5_helper.exercise_2))
 
 def test_exercise_3():
-    assert set(answers['exercise_3']) == set(run_exercise_3(Lab4_helper.exercise_3))
+    assert set(answers['exercise_3']) == set(run_exercise_3(Lab5_helper.exercise_3))
