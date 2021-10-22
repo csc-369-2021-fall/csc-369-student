@@ -284,9 +284,6 @@ Before coding, consider the following diagram and ask yourself the following whe
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
-##### BEGIN ANSWER
-a11 matches with b12 and a12 matches with b22. The pattern that is important to extract out of here is that the column of A is matched with the row of B.
-##### END ANSWER
 **Your answer here**
 <!-- #endregion -->
 

@@ -244,9 +244,6 @@ R
 # <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Matrix_multiplication_diagram_2.svg/440px-Matrix_multiplication_diagram_2.svg.png">
 
 # + [markdown] slideshow={"slide_type": "subslide"}
-# ##### BEGIN ANSWER
-# a11 matches with b12 and a12 matches with b22. The pattern that is important to extract out of here is that the column of A is matched with the row of B.
-# ##### END ANSWER
 # **Your answer here**
 
 # + [markdown] slideshow={"slide_type": "subslide"}

@@ -80,7 +80,7 @@ output[:10]
 # We can use pandas to print it in a readable way
 pd.DataFrame(output,columns=['Word','Frequency']).sort_values(by="Frequency")
 
-# **Exercise 4:** Use ``wholeTextFiles`` and the ``map`` function to return the word counts for each book individually in an **RDD**. Please note this is different from the Chapter in that you should not call .collect() in your function anymore. Call this function book_word_counts. Do not use your previous function word_freq as that will not work in this case without modifications.
+# **Exercise 4:** Use ``wholeTextFiles`` and the ``map`` function to return the word counts for each book individually in an **RDD**. Call this function book_word_counts. Do not use your previous function word_freq as that will not work in this case without modifications.
 
 # + tags=[]
 res = Lab4_helper.book_word_counts(sc,f"file:{home}/csc-369-student/data/gutenberg")
