@@ -15,9 +15,7 @@ jupyter:
 ---
 
 <!-- #region slideshow={"slide_type": "slide"} hideCode=false hidePrompt=false -->
-# Chapter 5 - Spark SQL
-
-## And related data topics
+# Chapter 6 - Spark SQL
 
 Paul E. Anderson
 <!-- #endregion -->
@@ -25,19 +23,11 @@ Paul E. Anderson
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## Ice Breaker
 
-What was the first concert you ever went to?
+Good rainy day story or snow day story?
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
 While this text can be viewed as PDF, it is most useful to have a Jupyter environment. I have an environment ready for each of you, but you can get your own local environment going in several ways. One popular way is with Anaconda (<a href="https://www.anaconda.com/">https://www.anaconda.com/</a>. Because of the limited time, you can use my server.
-<!-- #endregion -->
-
-<!-- #region slideshow={"slide_type": "subslide"} -->
-### Update on lab grades
-<!-- #endregion -->
-
-<!-- #region slideshow={"slide_type": "subslide"} -->
-<img src='../labs/grade_summary.png' width=600>
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "slide"} -->
