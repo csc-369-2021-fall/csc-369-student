@@ -49,8 +49,9 @@ def get_col(s):
 
 def exercise_1(A_RDD,B_RDD):
     result = None
-    A2 = A_RDD.map(lambda kv: ("A x B",[get_row(kv[0]),kv[1]]))
-    B2 = B_RDD.map(lambda kv: ("A x B",[get_col(kv[0]),kv[1]]))
+    A2 = A_RDD.map(lambda kv: (get_row(kv[0]),kv[1]))
+    B2 = B_RDD.map(lambda kv: (get_col(kv[0]),kv[1]))
+    
 
     # Your solution here
     return result
