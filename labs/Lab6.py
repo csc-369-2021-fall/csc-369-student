@@ -64,71 +64,9 @@ on_time_df.columns
 # The first row
 on_time_df.first()
 
-# What if you want to average AirTime?
-
-# +
-from pyspark.sql.functions import avg, col
-
-on_time_df.select('AirTime').agg(
-    avg(col('AirTime'))
-).show()
-# -
-
-# So we need navigate a fine line where I don't throw the entire Spark SQL api at you, but there are some functions above that should be discussed. The first is select which you can use to get a subset of the columns. This is important for memory usage. Load only what you need :). The next few are agg which is short for aggregate. Then there is col which selects the column and then avg which of course is average. If you know sql, you can also rely on SQL to work the magic.
-
-# +
-on_time_df.select('AirTime').createOrReplaceTempView("AirTimeView") # create a temporary view so we can query our data
-
-sqlDF = spark.sql("SELECT avg(AirTime) FROM AirTimeView").show()
-# -
-
-# I don't know about you, but since I already know SQL or at least some SQL, I'm very excited that I can use that. For this lab in general, please use what makes sense to you to accomplish the job.
-
-# What if I wanted average air time per month?
-
-# +
-on_time_df.select('AirTime','Month').createOrReplaceTempView("AirTimeView") # create a temporary view so we can query our data
-
-sqlDF = spark.sql("SELECT Month, avg(AirTime) FROM AirTimeView group by Month").show()
-# -
-
-on_time_df.select('AirTime','Month').groupBy(
-    'Month'
-).agg(
-    avg(col('AirTime'))
-).show()
-
-# Pretty nice right? You can see why companies might really value engineers who can bring data processing skills with them.
-#
-# Let's now read in some data that helps us map Carrier name to AirlineName.
-
 airlines = spark.read.parquet('file:///disk/airline-data/DOT_airline_codes_table')
 
 airlines.show()
-
-# What if we want to apply a user defined function? Here is an example where a new function is defined that combines Year and Month into a string. I also use the sample function to illustrate how to get a random subset of the data. Finally, I show an important function called ``cache``. It is important because we may want to reuse a result. Cache tells Spark that we want to reuse something so please try to keep it cached for us. Finally, I show how you can use orderBy to sort the data.
-
-# +
-from pyspark.sql.functions import udf
-from pyspark.sql.types import StringType
-
-def getYearMonthStr(year, month):
-    return '%d-%02d'%(year,month)
-
-udfGetYearMonthStr = udf(getYearMonthStr, StringType())
-
-example1 = on_time_df.select('Year','Month').withColumn(
-    'YearMonth', udfGetYearMonthStr('Year','Month')).sample(0.000001).cache()
-
-example1.show()
-# -
-
-example1.orderBy('YearMonth').show()
-
-# Finally, there are a number of things to make the world go round, such as renaming a column:
-# ```python
-# df.withColumnRenamed("dob","DateOfBirth").printSchema()
-# ```
 
 # **Exercise 1:** Create a dataframe that contains the average delay for each airline for each month of each year (i.e., group by carrier, year, and month):
 # * Columns: Carrier, average_delay, YearMonth
@@ -136,7 +74,7 @@ example1.orderBy('YearMonth').show()
 # * Must be ordered by YearMonth, Carrier
 # * The column to aggregate is ArrDelay
 
-airline_delay = Lab5_helper.exercise_1(on_time_df)
+airline_delay = Lab6_helper.exercise_1(on_time_df,spark)
 airline_delay.show()
 
 # **Exercise 2:** Now add a column with the airline name (i.e., use a join). Here is an example from the Spark documentation. Please order your result by YearMonth and Carrier.
@@ -150,7 +88,7 @@ airline_delay.show()
 #   .groupBy(department.name, "gender").agg({"salary": "avg", "age": "max"})
 # ```
 
-airline_delay2 = Lab5_helper.exercise_2(airline_delay,airlines)
+airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines,spark)
 airline_delay2.show()
 
 # If you did everything correctly, you are now rewarded with a nice graph :)
@@ -172,7 +110,7 @@ alt.Chart(airline_delay_pd).mark_line().encode(
 # **Exercise 3:** Let's assume you believe that the delays experienced by some airlines are correlated. The cause is a different story as we all know correlation does not equal causation. But correlation is often what we can easily calculate, so let's do it on a month by month basis. The first step is of course to get the data in the correct format. We would like each airline to have it's own column because we can easily compute the correlation between columns. Each row in this new dataframe should be a YearMonth.
 
 # +
-data_for_corr = Lab5_helper.exercise_3(airline_delay2)
+data_for_corr = Lab6_helper.exercise_3(airline_delay2,spark)
 
 # The data is now small enough to handle, so let's get it into pandas and calculate the correlation and filling
 # in missing values with the mean of the column
