@@ -26,31 +26,19 @@ on_time_df = spark.read.parquet('file:///disk/airline-data-processed/airline-dat
 airlines = spark.read.parquet('file:///disk/airline-data/DOT_airline_codes_table')
 
 def run_exercise_1():
-    try:
-        airline_delay = Lab6_helper.exercise_1(on_time_df).head(10)
-    except TypeError:
-        airline_delay = Lab6_helper.exercise_1(on_time_df,spark).head(10)
+    airline_delay = Lab6_helper.exercise_1(on_time_df,spark).head(10)
     return airline_delay
 
 def run_exercise_2():
-    try:
-        airline_delay = Lab6_helper.exercise_1(on_time_df)
-        airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines)
-    except TypeError:
-        airline_delay = Lab6_helper.exercise_1(on_time_df,spark)
-        airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines,spark)        
+    airline_delay = Lab6_helper.exercise_1(on_time_df,spark)
+    airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines,spark)        
 
     return airline_delay2.head(10)
 
 def run_exercise_3():
-    try:
-        airline_delay = Lab6_helper.exercise_1(on_time_df)
-        airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines)
-        data_for_corr = Lab6_helper.exercise_3(airline_delay2).toPandas()
-    except TypeError:
-        airline_delay = Lab6_helper.exercise_1(on_time_df,spark)
-        airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines,spark)
-        data_for_corr = Lab6_helper.exercise_3(airline_delay2,spark).toPandas()        
+    airline_delay = Lab6_helper.exercise_1(on_time_df,spark)
+    airline_delay2 = Lab6_helper.exercise_2(airline_delay,airlines,spark)
+    data_for_corr = Lab6_helper.exercise_3(airline_delay2,spark).toPandas()        
 
     return data_for_corr
 
