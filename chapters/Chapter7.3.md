@@ -26,7 +26,7 @@ Paul E. Anderson
 Best breakfast burrito in town?
 <!-- #endregion -->
 
-```python
+```python slideshow={"slide_type": "subslide"}
 %load_ext autoreload
 %autoreload 2
     
@@ -48,13 +48,15 @@ import pandas as pd
 The company has heard about your amazing skills as a Spark streaming expert. They would like you to take their pre-trained classifier and update it with new incoming data processed via Spark streaming.
 <!-- #endregion -->
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Detours
 
 In order to implement our streaming approach, we need to take a couple of brief detours into machine learning. We need to answer the following questions:
 * How do we represent text as a vector of numbers such that a machine can mathematically learn from data?
 * How to use and evaluate an algorithm to predict numeric data into three categories (negative, positive, and neutral)? 
+<!-- #endregion -->
 
-<!-- #region colab_type="text" id="YbTiSkqNb75B" -->
+<!-- #region colab_type="text" id="YbTiSkqNb75B" slideshow={"slide_type": "subslide"} -->
 ### Representing text as a vector using `scikit-learn`
 
 scikit-learn is a popular package for machine learning.
@@ -62,6 +64,7 @@ scikit-learn is a popular package for machine learning.
 We will use a class called `CountVectorizer` in `scikit-learn` to obtain what is called the term-frequency matrix. 
 <!-- #endregion -->
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 A couple famous book openings:
 
 > The story so far: in the beginning, the universe was created. This has made a lot of people very angry and been widely regarded as a bad move - The Restaurant at the End of the Universe by Douglas Adams (1980)
@@ -69,8 +72,9 @@ A couple famous book openings:
 > Whether I shall turn out to be the hero of my own life, or whether that station will be held by anybody else, these pages must show. — Charles Dickens, David Copperfield (1850)
 
 How will a computer understand these sentences when computers can only add/mult/compare numbers?
+<!-- #endregion -->
 
-```python colab={} colab_type="code" id="Fhl2Kwb5b75C"
+```python colab={} colab_type="code" id="Fhl2Kwb5b75C" slideshow={"slide_type": "subslide"}
 from sklearn.feature_extraction.text import CountVectorizer
 
 famous_book_openings = [
@@ -84,9 +88,11 @@ tf_sparse = vec.transform(famous_book_openings)
 tf_sparse
 ```
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Printing in a readable format
+<!-- #endregion -->
 
-```python
+```python slideshow={"slide_type": "fragment"}
 import pandas as pd
 
 pd.DataFrame(
@@ -95,56 +101,87 @@ pd.DataFrame(
 )
 ```
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Applying this process to our twitter data
 We will do the following:
 1. Load the tweets into a dataframe
 2. Convert those tweets into a term-frequency matrix using the code from above
+<!-- #endregion -->
 
-
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ### Loading tweets into a dataframe
+<!-- #endregion -->
 
-```python
-import glob
-def read_files(glob_pattern,columns=['ItemID','Sentiment','SentimentText']):
-    files = glob.glob(glob_pattern)
-    files = sorted(files)
-    historical_training_data = None
-    for file in files:
-        df = pd.read_csv(file,header=None)
-        columns).set_index('ItemID')
-        if historical_training_data is None:
-            historical_training_data = df
-        else:
-            historical_training_data = historical_training_data.append(df)
-    return historical_training_data
+```python slideshow={"slide_type": "subslide"}
+from pyspark.sql import SparkSession
 
-read_files(f'{home}/csc-369-student/data/twitter_sentiment_analysis/historical/xa*')
+spark = SparkSession \
+    .builder \
+    .appName("Python Spark SQL basic example") \
+    .getOrCreate()
 ```
 
-### Convert to a term frequency matrix
+```python slideshow={"slide_type": "subslide"}
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType
 
-```python
+schema = StructType([ \
+    StructField("ItemID", IntegerType(), True), \
+    StructField("Sentiment", IntegerType(), True), \
+    StructField("SentimentText",StringType(),True)
+  ])
+
+spark_df = spark.read.schema(schema).csv(f'{home}/csc-369-student/data/twitter_sentiment_analysis/historical/xa*')
+spark_df.first()
+```
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+### Convert to Pandas DataFrame for sklearn
+<!-- #endregion -->
+
+```python slideshow={"slide_type": "fragment"}
+historical_training_data = spark_df.toPandas()
+historical_training_data.head()
+```
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+### Convert to a term frequency matrix
+<!-- #endregion -->
+
+```python slideshow={"slide_type": "subslide"}
 vec = CountVectorizer()
 vec.fit(historical_training_data['SentimentText']) # This determines the vocabulary.
 tf_sparse = vec.transform(historical_training_data['SentimentText'])
 ```
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 ## Mathematical model for prediction
 * We will use a multinomial Bayes classifier. 
 * It is a statistical classifier that has good baseline performance for text analysis. 
 * It's a classifier that you can update as new data arrives (i.e., online learning)
+<!-- #endregion -->
 
-```python
+```python slideshow={"slide_type": "subslide"}
 from sklearn.naive_bayes import MultinomialNB
 model = MultinomialNB()
 model.fit(tf_sparse,historical_training_data['Sentiment'])
 ```
 
+<!-- #region slideshow={"slide_type": "subslide"} -->
 **How well does this model predict on historical data?**
+<!-- #endregion -->
 
-```python
-sum(model.predict(tf_sparse) == historical_training_data['Sentiment'])/len(historical_training_data)
+```python slideshow={"slide_type": "fragment"}
+test_spark_df = spark.read.schema(schema).csv(f'{home}/csc-369-student/data/twitter_sentiment_analysis/historical/xb*')
+historical_test_data = test_spark_df.toPandas()
+test_tf_sparse = vec.transform(historical_test_data['SentimentText'])
+print("Accuracy on new historical test data:",sum(model.predict(test_tf_sparse) == historical_test_data['Sentiment'])/len(historical_test_data))
 ```
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+**We've got a predictive model that does better than guessing!**
+
+That's enough for this illustrative example. Now how would we update this using Spark Streaming?
+<!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ### The usual SparkContext
@@ -167,117 +204,20 @@ from pyspark.streaming import StreamingContext
 ssc = StreamingContext(sc, 1)
 ```
 
-### After a context is defined:
-* Define the input sources by creating input DStreams.
-* Define the streaming computations by applying transformation and output operations to DStreams.
-* Start receiving data and processing it using streamingContext.start().
-* Wait for the processing to be stopped (manually or due to any error) using streamingContext.awaitTermination().
-* The processing can be manually stopped using streamingContext.stop().
+<!-- #region slideshow={"slide_type": "subslide"} -->
+### Create a directory where we can add tweets
+<!-- #endregion -->
 
-
-### Points to remember:
-* Once a context has been started, no new streaming computations can be set up or added to it.
-* Once a context has been stopped, it cannot be restarted.
-* Only one StreamingContext can be active in a JVM at the same time.
-* A SparkContext can be re-used to create multiple StreamingContexts, as long as the previous StreamingContext is stopped (without stopping the SparkContext) before the next StreamingContext is created.
-
-```python slideshow={"slide_type": "subslide"}
-PORT=9999 # Change this to a unique port before running individually
-HOST="localhost"
+```python slideshow={"slide_type": "fragment"}
+data_dir="/tmp/tweets"
+!rm -rf {data_dir}
+!mkdir {data_dir}
+!chmod 777 {data_dir}
+!ls {data_dir}
 ```
 
-```python slideshow={"slide_type": "subslide"}
-print("Run this command at the terminal and type in words and hit enter periodically:")
-print(f"nc -lk {PORT}")
-```
-
-### Discretized Streams (DStreams)
-* DStream is the basic abstraction provided by Spark Streaming
-* Continuous stream of data, either the input data stream received from source, or the processed data stream generated by transforming the input stream. 
-* Internally, a DStream is represented by a continuous series of RDDs
-* Each RDD in a DStream contains data from a certain interval, as shown in the following figure.
-
-
-<img src="https://spark.apache.org/docs/latest/img/streaming-dstream.png">
-
-
-* Any operation applied on a DStream translates to operations on the underlying RDDs. 
-* In our example of converting a stream of lines to words, the flatMap operation is applied on each RDD in the lines DStream to generate the RDDs of the words DStream. 
-* This is shown in the following figure:
-<img src="https://spark.apache.org/docs/latest/img/streaming-dstream-ops.png">
-
-```python slideshow={"slide_type": "subslide"}
-lines = ssc.socketTextStream(HOST, PORT)
-counts = lines.flatMap(lambda line: line.split(" "))\
-              .map(lambda word: (word, 1))\
-              .reduceByKey(lambda a, b: a+b)
-counts.pprint()
-
-ssc.start()
-import time; time.sleep(10)
-#ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
-ssc.stop(stopSparkContext=False)
-```
-
-**Stop and think:** What is missing in our previous example? 
-
-
-One thing is a lack of state. We process the lines in an RDD/DStream and print the results. What if we wanted to accumulate the word counts?
-
-```python
-ssc = StreamingContext(sc, 1)
-ssc.checkpoint("checkpoint")
-
-# RDD with initial state (key, value) pairs
-
-def updateFunc(new_values, last_sum):
-    return sum(new_values) + (last_sum or 0)
-
-lines = ssc.socketTextStream(HOST,PORT)
-running_counts = lines.flatMap(lambda line: line.split(" "))\
-                      .map(lambda word: (word, 1))\
-                      .updateStateByKey(updateFunc, initialRDD=initialStateRDD)
-
-running_counts.pprint()
-
-ssc.start()
-import time; time.sleep(5)
-#ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
-ssc.stop(stopSparkContext=False)
-```
-
-## Monitoring a directory
-
-You can monitor a directory and apply the same processing.
-
-```python
-data_dir = "/tmp/add_books_here"
-
-ssc = StreamingContext(sc, 1)
-ssc.checkpoint("checkpoint")
-
-# RDD with initial state (key, value) pairs
-
-def updateFunc(new_values, last_sum):
-    return sum(new_values) + (last_sum or 0)
-
-lines = ssc.textFileStream(data_dir)
-
-running_counts = lines.flatMap(lambda line: line.split(" "))\
-                      .map(lambda word: (word, 1))\
-                      .updateStateByKey(updateFunc)
-
-running_counts.pprint()
-
-ssc.start()
-import time; time.sleep(30)
-#ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
-ssc.stop(stopSparkContext=False)
-
-
-```
-
-### Bridging Streaming and Spark SQL
+<!-- #region slideshow={"slide_type": "subslide"} -->
+### Code from 7.2
 
 ```python
 data_dir = "/tmp/add_books_here"
@@ -329,6 +269,43 @@ import time; time.sleep(30)
 #ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
 ssc.stop(stopSparkContext=False)
 ```
+<!-- #endregion -->
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+### How would you modify this so it updates the model via Spark Streaming?
+<!-- #endregion -->
+
+```python slideshow={"slide_type": "fragment"}
+# Your solution here
+
+ssc.start()
+import time; time.sleep(10)
+ssc.stop(stopSparkContext=False)
+```
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+**Help our algorithm by copying some of the data files in the directory!**
+<!-- #endregion -->
+
+```python slideshow={"slide_type": "fragment"}
+!ls {home}/csc-369-student/data/twitter_sentiment_analysis/streaming/
+```
+
+```python slideshow={"slide_type": "fragment"}
+!echo cp \~/csc-369-student/data/twitter_sentiment_analysis/streaming/xca {data_dir}
+```
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+**When we are ready we can check the accuracy again. In theory, we should get better with more data.**
+<!-- #endregion -->
+
+```python slideshow={"slide_type": "fragment"}
+print("Accuracy on new historical test data:",sum(model.predict(test_tf_sparse) == historical_test_data['Sentiment'])/len(historical_test_data))
+```
+
+<!-- #region slideshow={"slide_type": "subslide"} -->
+Thank you! Don't forget to push.
+<!-- #endregion -->
 
 ```python
 
