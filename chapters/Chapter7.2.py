@@ -90,7 +90,7 @@ counts = lines.flatMap(lambda line: line.split(" "))\
 counts.pprint()
 
 ssc.start()
-import time; time.sleep(1)
+import time; time.sleep(10)
 #ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
 ssc.stop(stopSparkContext=False)
 # -
@@ -98,8 +98,6 @@ ssc.stop(stopSparkContext=False)
 # **Stop and think:** What is missing in our previous example? 
 
 # One thing is a lack of state. We process the lines in an RDD/DStream and print the results. What if we wanted to accumulate the word counts?
-
-sc
 
 # +
 ssc = StreamingContext(sc, 1)
@@ -118,7 +116,7 @@ running_counts = lines.flatMap(lambda line: line.split(" "))\
 running_counts.pprint()
 
 ssc.start()
-import time; time.sleep(10)
+import time; time.sleep(5)
 #ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
 ssc.stop(stopSparkContext=False)
 # -
@@ -142,12 +140,12 @@ lines = ssc.textFileStream(data_dir)
 
 running_counts = lines.flatMap(lambda line: line.split(" "))\
                       .map(lambda word: (word, 1))\
-                      .updateStateByKey(updateFunc, initialRDD=initialStateRDD)
+                      .updateStateByKey(updateFunc)
 
 running_counts.pprint()
 
 ssc.start()
-import time; time.sleep(1)
+import time; time.sleep(30)
 #ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
 ssc.stop(stopSparkContext=False)
 
@@ -157,6 +155,9 @@ ssc.stop(stopSparkContext=False)
 # ### Bridging Streaming and Spark SQL
 
 # +
+data_dir = "/tmp/add_books_here"
+
+
 from pyspark.sql import SparkSession
 from pyspark.sql import Row
 import traceback
@@ -199,7 +200,7 @@ def process(time, rdd):
 lines.foreachRDD(process)
 
 ssc.start()
-import time; time.sleep(10)
+import time; time.sleep(30)
 #ssc.awaitTerminationOrTimeout(60) # wait 60 seconds
 ssc.stop(stopSparkContext=False)
 # -
