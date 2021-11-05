@@ -24,6 +24,16 @@
 #
 # Best breakfast burrito in town?
 
+# +
+# %load_ext autoreload
+# %autoreload 2
+    
+import os
+from pathlib import Path
+home = str(Path.home())
+
+import pandas as pd
+
 # + [markdown] slideshow={"slide_type": "slide"}
 # ## Problem Statement:
 # * You are approached by a company who has a machine learning pipeline that is trained and tested on historical data. 
@@ -84,7 +94,20 @@ pd.DataFrame(
 
 # ## Applying this process to our twitter data
 
-
+import glob
+files = glob.glob(f'{home}/csc-369-student/data/twitter_sentiment_analysis/xa*') + \
+        glob.glob(f'{home}/csc-369-student/data/twitter_sentiment_analysis/xb*')
+files = sorted(files)
+historical_training_data = None
+for file in files:
+    if historical_training_data is None:
+        df = pd.read_csv(file).set_index('ItemID')
+        historical_training_data = df
+    else:
+        df = pd.read_csv(file,header=None)
+        df.columns = historical_training_data.reset_index().columns
+        historical_training_data = historical_training_data.append(df.set_index('ItemID'))
+historical_training_data.head()
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### The usual SparkContext
