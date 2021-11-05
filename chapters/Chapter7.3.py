@@ -93,21 +93,48 @@ pd.DataFrame(
 # -
 
 # ## Applying this process to our twitter data
+# We will do the following:
+# 1. Load the tweets into a dataframe
+# 2. Convert those tweets into a term-frequency matrix using the code from above
 
+# ### Loading tweets into a dataframe
+
+# +
 import glob
-files = glob.glob(f'{home}/csc-369-student/data/twitter_sentiment_analysis/xa*') + \
-        glob.glob(f'{home}/csc-369-student/data/twitter_sentiment_analysis/xb*')
-files = sorted(files)
-historical_training_data = None
-for file in files:
-    if historical_training_data is None:
-        df = pd.read_csv(file).set_index('ItemID')
-        historical_training_data = df
-    else:
+def read_files(glob_pattern,columns=['ItemID','Sentiment','SentimentText']):
+    files = glob.glob(glob_pattern)
+    files = sorted(files)
+    historical_training_data = None
+    for file in files:
         df = pd.read_csv(file,header=None)
-        df.columns = historical_training_data.reset_index().columns
-        historical_training_data = historical_training_data.append(df.set_index('ItemID'))
-historical_training_data.head()
+        columns).set_index('ItemID')
+        if historical_training_data is None:
+            historical_training_data = df
+        else:
+            historical_training_data = historical_training_data.append(df)
+    return historical_training_data
+
+read_files(f'{home}/csc-369-student/data/twitter_sentiment_analysis/historical/xa*')
+# -
+
+# ### Convert to a term frequency matrix
+
+vec = CountVectorizer()
+vec.fit(historical_training_data['SentimentText']) # This determines the vocabulary.
+tf_sparse = vec.transform(historical_training_data['SentimentText'])
+
+# ## Mathematical model for prediction
+# * We will use a multinomial Bayes classifier. 
+# * It is a statistical classifier that has good baseline performance for text analysis. 
+# * It's a classifier that you can update as new data arrives (i.e., online learning)
+
+from sklearn.naive_bayes import MultinomialNB
+model = MultinomialNB()
+model.fit(tf_sparse,historical_training_data['Sentiment'])
+
+# **How well does this model predict on historical data?**
+
+sum(model.predict(tf_sparse) == historical_training_data['Sentiment'])/len(historical_training_data)
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ### The usual SparkContext
