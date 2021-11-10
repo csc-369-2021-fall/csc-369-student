@@ -67,6 +67,32 @@ Put another way:
 <img src="https://www.educative.io/api/edpresso/shot/6707099755085824/image/5783885981941760">
 <!-- #endregion -->
 
+## CAP Theorem
+
+Consistency - all nodes should see the same data at the same time
+
+Availability - node failures do not prevent surviving nodes from continuing to operate
+
+Partition tolerance - the system continues to function despite arbitrary message loss
+
+
+When a network partition failure happens, it must be decided whether to
+* cancel the operation and thus decrease the availability but ensure consistency or to
+* proceed with the operation and thus provide availability but risk inconsistency.
+
+Thus, if there is a network partition, one has to choose between consistency and availability. 
+
+Eric Brewer argues that the often-used "two out of three" concept can be somewhat misleading because system designers only need to sacrifice consistency or availability in the presence of partitions, but that in many systems partitions are rare.
+
+In distributed systems, there is a real chance of networking failures, so partition tolerance has to be accepted (i.e., there is a network partition), so now we have to choose between consitency and availability.
+
+
+Note that consistency as defined in the CAP theorem is quite different from the consistency guaranteed in ACID database transactions.
+
+ACID addresses an individual node's data consistency
+
+CAP addresses cluster-wide data consistency
+
 <!-- #region slideshow={"slide_type": "subslide"} -->
 ## What are the tradeoffs?
 <img src="https://cdn.educba.com/academy/wp-content/uploads/2020/01/CAP-Theorem-last.jpg">
