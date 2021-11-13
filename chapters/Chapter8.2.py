@@ -128,6 +128,8 @@ record
 # -
 
 # **Exercise 6:** Write a function using ``aggregate``. The function reports the count and the cumulative increase in positive cases (when there were positive cases) within the date range (inclusive). Do not include missing days or values (i.e., positive cases > 0). I used \$match, \$group, and \$and within aggregate. The columns I used are date, state, and positiveIncrease.
+#
+# <a href="https://docs.mongodb.com/manual/aggregation/#std-label-aggregation-framework">Documentation</a>
 
 # +
 def process_exercise_6(result):
@@ -153,7 +155,7 @@ record
 record['AZ'],record['AL']
 
 
-# **Exercise 7:** Repeat exercise 3, but instead of using aggregate you must use map-reduce.
+# **Exercise 7:** Repeat exercise 6, but instead of using aggregate you must use map-reduce.
 
 # +
 def process_exercise_7(result):
