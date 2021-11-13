@@ -6,10 +6,10 @@ import pathlib
 DIR=pathlib.Path(__file__).parent.absolute()
 
 import joblib 
-answers = joblib.load(str(DIR)+"/answers_Lab7.joblib")
+answers = joblib.load(str(DIR)+"/answers_Lab8.joblib")
 
 # Import the student solutions
-import Lab7_helper as helper
+import Lab8_helper as helper
 
 from pymongo import MongoClient
 client = MongoClient()

@@ -15,7 +15,7 @@ jupyter:
 ---
 
 <!-- #region slideshow={"slide_type": "slide"} -->
-# Lab 7 - MongoDB
+# Lab 8 - MongoDB
 <!-- #endregion -->
 
 <!-- #region slideshow={"slide_type": "subslide"} -->
@@ -118,20 +118,20 @@ I've noticed during interactions that some folks are skipping the line below. It
 
 ```python slideshow={"slide_type": "skip"}
 # make sure your run the cell above before running this
-import Lab7_helper
+import Lab8_helper
 ```
 
 **Exercise 1:** Use find_one to find a record with an object ID equal to 60392e3656264fee961ca817. 
 
 ```python
-record = Lab7_helper.exercise_1(col,'60392e3656264fee961ca817')
+record = Lab8_helper.exercise_1(col,'60392e3656264fee961ca817')
 record
 ```
 
 **Exercise 2:** Use count_documents to count the number of records/documents that have ``state`` equal to 'CA'. 
 
 ```python
-record = Lab7_helper.exercise_2(col,'CA')
+record = Lab8_helper.exercise_2(col,'CA')
 record
 ```
 
@@ -139,7 +139,7 @@ record
 
 ```python tags=[]
 d = 20200315 # YYYY-MM-DD
-record = Lab7_helper.exercise_3(col,d)
+record = Lab8_helper.exercise_3(col,d)
 record[:3]
 ```
 
@@ -147,7 +147,7 @@ record[:3]
 in New York state on April 1.
 
 ```python
-record = Lab7_helper.exercise_4(col)
+record = Lab8_helper.exercise_4(col)
 record
 ```
 
@@ -157,18 +157,18 @@ record
 > So if you want to sort by, let's say, id then you should .sort("_id", 1)
 
 ```python
-record = Lab7_helper.exercise_5(col)
+record = Lab8_helper.exercise_5(col)
 record
 ```
 
 **Exercise 6:** Write a function using ``aggregate``. The function reports the count and the cumulative increase in positive cases (when there were positive cases) within the date range (inclusive). Do not include missing days or values (i.e., positive cases > 0). I used ``$match``, ``$group``, and ``$and`` within aggregate. The columns I used are date, state, and positiveIncrease.
 
 ```python
-result = list(Lab7_helper.exercise_6(col,20200401,20200402))
+result = list(Lab8_helper.exercise_6(col,20200401,20200402))
 import pprint
 pprint.pprint((result))
 
-record = Lab7_helper.process_exercise_6(result)
+record = Lab8_helper.process_exercise_6(result)
 record
 ```
 
@@ -179,11 +179,11 @@ record['AZ'],record['AL']
 **Exercise 7:** Repeat exercise 6, but instead of using aggregate you must use map-reduce.
 
 ```python
-result = list(Lab7_helper.exercise_7(col,20200401,20200402).find())
+result = list(Lab8_helper.exercise_7(col,20200401,20200402).find())
 import pprint
 pprint.pprint((result))
 
-record = Lab7_helper.process_exercise_7(result)
+record = Lab8_helper.process_exercise_7(result)
 record
 ```
 

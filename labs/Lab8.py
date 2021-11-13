@@ -15,7 +15,7 @@
 # ---
 
 # + [markdown] slideshow={"slide_type": "slide"}
-# # Lab 7 - MongoDB
+# # Lab 8 - MongoDB
 
 # + [markdown] slideshow={"slide_type": "subslide"}
 # ## Disclaimer
@@ -111,31 +111,31 @@ pprint.pprint(col.find_one())
 
 # + slideshow={"slide_type": "skip"}
 # make sure your run the cell above before running this
-import Lab7_helper
+import Lab8_helper
 # -
 
 # **Exercise 1:** Use find_one to find a record with an object ID equal to 60392e3656264fee961ca817. 
 
-record = Lab7_helper.exercise_1(col,'60392e3656264fee961ca817')
+record = Lab8_helper.exercise_1(col,'60392e3656264fee961ca817')
 record
 
 # **Exercise 2:** Use count_documents to count the number of records/documents that have ``state`` equal to 'CA'. 
 
-record = Lab7_helper.exercise_2(col,'CA')
+record = Lab8_helper.exercise_2(col,'CA')
 record
 
 # **Exercise 3:** Write a function that returns all of the documents that have a date less than ``d``. Sort the documents by the date, and convert the result to a list.
 
 # + tags=[]
 d = 20200315 # YYYY-MM-DD
-record = Lab7_helper.exercise_3(col,d)
+record = Lab8_helper.exercise_3(col,d)
 record[:3]
 # -
 
 # **Exercise 4:** Write a function that returns the total number of positive cases and the number of new cases
 # in New York state on April 1.
 
-record = Lab7_helper.exercise_4(col)
+record = Lab8_helper.exercise_4(col)
 record
 
 # **Exercise 5:** Write a function that returns how many deaths were in the state of New Jersey on the earliest day when the total cumulative number of deaths exceeded 500 (i.e., ``death`` column).
@@ -143,17 +143,17 @@ record
 # > .sort(), in pymongo, takes key and direction as parameters.
 # > So if you want to sort by, let's say, id then you should .sort("_id", 1)
 
-record = Lab7_helper.exercise_5(col)
+record = Lab8_helper.exercise_5(col)
 record
 
 # **Exercise 6:** Write a function using ``aggregate``. The function reports the count and the cumulative increase in positive cases (when there were positive cases) within the date range (inclusive). Do not include missing days or values (i.e., positive cases > 0). I used ``$match``, ``$group``, and ``$and`` within aggregate. The columns I used are date, state, and positiveIncrease.
 
 # +
-result = list(Lab7_helper.exercise_6(col,20200401,20200402))
+result = list(Lab8_helper.exercise_6(col,20200401,20200402))
 import pprint
 pprint.pprint((result))
 
-record = Lab7_helper.process_exercise_6(result)
+record = Lab8_helper.process_exercise_6(result)
 record
 # -
 
@@ -162,11 +162,11 @@ record['AZ'],record['AL']
 # **Exercise 7:** Repeat exercise 6, but instead of using aggregate you must use map-reduce.
 
 # +
-result = list(Lab7_helper.exercise_7(col,20200401,20200402).find())
+result = list(Lab8_helper.exercise_7(col,20200401,20200402).find())
 import pprint
 pprint.pprint((result))
 
-record = Lab7_helper.process_exercise_7(result)
+record = Lab8_helper.process_exercise_7(result)
 record
 # -
 
