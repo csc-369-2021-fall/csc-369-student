@@ -59,6 +59,13 @@ def process_exercise_7(result):
 def exercise_7(col,date1,date2):
     result = None
     # partial solution
+    #map_func = Code(
+    #    """Insert Javascript code here"""
+    #)
+    #reduce_func = Code(
+    #    """Insert Javascript code here"""
+    #)   
+    #result = col.map_reduce(map_func, reduce_func, "myresults")  
     # Your solution here
     return result
 
